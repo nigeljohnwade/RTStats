@@ -1,0 +1,11 @@
+{
+  "name": "rt-stats",
+  "version": "1.0.0",
+  "description": "Stats dashboard for Reason Talk",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nigel Wade",
+  "license": "ISC"
+}

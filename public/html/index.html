@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>ReasonTalk stats dahsbaord</title>
+        <style>
+            .bar{
+                background-color: lightsteelblue;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="dashboard">
+        </div>
+        <script src="../js/d3.js" type="application/javascript"></script>
+        <script type="application/javascript">
+            d3.json('../JSON/stats.json', function(data){
+                console.log(data.totalPostsPerMonth.length);
+                console.log(data.totalNewUsersPerMonth.length);
+                const root = d3.select(".dashboard")
+                    .data(data.totalNewUsersPerMonth)
+                    .enter()
+                        .append('div');
+
+                root.append("p")
+                        .classed('label', true)
+                        .text(function(d) { 
+                            return "New Users for " + d.month + "/" + d.year + " was " + d.users + "!";
+                            }); 
+                root.append("div")
+                        .classed('bar', true)
+                        .style('width', function(d){
+                            return d.users + 'px';
+                        })
+                        .style('height', '30px');
+                                    
+            });
+        </script>
+    </body>
+</html>
