@@ -13,9 +13,8 @@ const d3ChartUtilities = {
             '#62a3d0', '#72bf5b', '#ef5a5a', '#fe9f37', '#9a77b8', '#d8ac60',
             '#a6cee3', '#b2df8a', '#fb9a99', '#fdbf6f', '#cab2d6', '#ffff99'
         ];
-        //TODO: fix jquery dependency
-        var width = container.width(),
-            height = container.height(),
+        var width = container.clientWidth,
+            height = container.clientHeight,
             legendWidth = 0,
             chartTitleHeight = 0,
             captionTextHeight = 0,
@@ -29,17 +28,16 @@ const d3ChartUtilities = {
 
         //For multi series data
         var _dataCollate = {max: [], length: []};
-        $.each(data, function (idx, elem) {
-            _dataCollate.max.push(elem)
-            _dataCollate.length.push(elem.length)
+        data.forEach(function (element, index, array) {
+            _dataCollate.max = _dataCollate.max.concat(element);
+            _dataCollate.length.push(element.length)
         });
 
         if (props.displayLegend) {
             legend.drawLegend(data, labels, colors, container, layout);
             legendWidth = $('.legend', container).width();
         }
-        //TODO: fix jquery dependency
-        var containerSelection = d3.select(container[0]);
+        var containerSelection = d3.select(container);
 
         var chart = containerSelection.append("svg")
             .attr("width", width - legendWidth)
@@ -92,7 +90,7 @@ const d3ChartUtilities = {
 
         var y = d3.scaleLinear()
             .range([plotHeight, 0]);
-        y.domain([0, d3.max(_dataCollate.max[0])]);
+        y.domain([0, d3.max(_dataCollate.max)]);
         //var y_axis = d3.svg.axis().scale(y).orient("left").tickFormat(d3.format("s"));
         var axis_y = containerSelection.select("svg")
             .append("g")

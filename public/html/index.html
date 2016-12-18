@@ -14,11 +14,7 @@
     <body>
         <div class="dashboard">
         </div>
-        <script 
-             src="https://code.jquery.com/jquery-3.1.1.min.js"
-             integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-             crossorigin="anonymous">
-        </script>
+        
         <script src="../js/d3.js" type="application/javascript"></script>
         <script src="../js/d3ChartUtilities.js" type="application/javascript"></script>
         <script type="application/javascript">
@@ -33,7 +29,7 @@
                     [columnChartData], 
                     [columnChartLabels], 
                     'users-per-month', 
-                    $('.dashboard'), 
+                    document.querySelector('.dashboard'), 
                     {
                         displayLegend: false,
                         xAxisTickLabelRotation: 0,
