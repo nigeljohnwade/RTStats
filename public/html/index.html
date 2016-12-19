@@ -8,28 +8,43 @@
             }
             .dashboard{
                 height: 300px;
+                display: flex;
+            }
+            .dashboard--active-users{
+                flex-basis: 33%;
+                font-size: 150px;
+            }
+            .dashboard--new-users{
+                flex-basis: 66%;
             }
         </style>
     </head>
     <body>
         <div class="dashboard">
+            <div class="dashboard--active-users">
+            </div>
+            <div class="dashboard--new-users">
+            </div>
+            <div class="dashboard--latest-posts">
+            </div>
         </div>
         
         <script src="../js/d3.js" type="application/javascript"></script>
         <script src="../js/d3ChartUtilities.js" type="application/javascript"></script>
         <script type="application/javascript">
-            d3.json('../JSON/stats.json', function(data){
+            d3.json('http://api.reasontalk.com/stats', function(data){
                 const columnChartData = data.totalNewUsersPerMonth.map(function(element, index, array){
                     return element.users;
                 });
-                const columnChartLabels = data.totalNewUsersPerMonth.map(function(element, index, array){
+                const tickLabels = data.totalNewUsersPerMonth.map(function(element, index, array){
                     return element.year + ' ' + element.month;
                 });
                 d3ChartUtilities.drawColumnChart(
                     [columnChartData], 
-                    [columnChartLabels], 
-                    'users-per-month', 
-                    document.querySelector('.dashboard'), 
+                    ['New Users'],
+                    [tickLabels], 
+                    '.dashboard--new-users--per-month', 
+                    document.querySelector('.dashboard--new-users'), 
                     {
                         displayLegend: false,
                         xAxisTickLabelRotation: 0,
@@ -37,6 +52,20 @@
                     }
                 );
                                     
+            });
+            d3.json('http://api.reasontalk.com/stats/activeusers', function(data){
+                d3.select('.dashboard--active-users')
+                    .append('p')
+                    .text(data)
+            });
+            d3.json('http://api.reasontalk.com/posts/latest/10', function(data){
+                d3.select('.dashboard--latest-posts')
+                    .data(data)
+                    .enter()
+                    .append('p')
+                    .text(function(d){
+                        return d.title;
+                    })
             });
         </script>
     </body>
