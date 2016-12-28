@@ -1,0 +1,39 @@
+*{
+    box-sizing: border-box;
+}
+p{
+    margin: 0
+}
+.bar{
+    background-color: lightsteelblue;
+}
+.dashboard{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 6px;
+    border: 1px solid steelblue;
+}
+.dashboard--element{
+    padding: 6px;
+    height: 300px;
+    background-color: white;
+    border: 1px solid steelblue;
+}
+.dashboard--active-users {
+    width: 33.33333%;
+}
+.dashboard--active-user-count{
+    font-size: 150px;
+}
+.dashboard--new-users{
+    width: 66.66666%;
+}
+.dashboard--latest-posts{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.dashboard--post-single{
+    width: 20%;
+}
+

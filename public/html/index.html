@@ -2,28 +2,13 @@
 <html lang="en">
     <head>
         <title>ReasonTalk stats dahsbaord</title>
-        <style>
-            .bar{
-                background-color: lightsteelblue;
-            }
-            .dashboard{
-                height: 300px;
-                display: flex;
-            }
-            .dashboard--active-users{
-                flex-basis: 33%;
-                font-size: 150px;
-            }
-            .dashboard--new-users{
-                flex-basis: 66%;
-            }
-        </style>
+        <link href="../css/main.css" rel="stylesheet">
     </head>
     <body>
         <div class="dashboard">
-            <div class="dashboard--active-users">
+            <div class="dashboard--element dashboard--active-users">
             </div>
-            <div class="dashboard--new-users">
+            <div class="dashboard--element dashboard--new-users">
             </div>
             <div class="dashboard--latest-posts">
             </div>
@@ -32,7 +17,7 @@
         <script src="../js/d3.js" type="application/javascript"></script>
         <script src="../js/d3ChartUtilities.js" type="application/javascript"></script>
         <script type="application/javascript">
-            d3.json('http://api.reasontalk.com/stats', function(data){
+            d3.json('../JSON/stats.json', function(data){
                 const columnChartData = data.totalNewUsersPerMonth.map(function(element, index, array){
                     return element.users;
                 });
@@ -53,18 +38,28 @@
                 );
                                     
             });
-            d3.json('http://api.reasontalk.com/stats/activeusers', function(data){
-                d3.select('.dashboard--active-users')
-                    .append('p')
-                    .text(data)
+            d3.json('../JSON/activeusers.json', function(data){
+                var base = d3.select('.dashboard--active-users');
+                base.append('p')
+                    .classed('dashboard--active-user-count', true)
+                    .text(data);
+                base.append('p')
+                    .text('Active users');
             });
-            d3.json('http://api.reasontalk.com/posts/latest/10', function(data){
-                d3.select('.dashboard--latest-posts')
+            d3.json('../JSON/latestPosts.json', function(data){
+                var base = d3.select('.dashboard--latest-posts');
+                var item = base.selectAll('div')
                     .data(data)
                     .enter()
+                    .append('a')
+                    .classed('dashboard--post-single', true)
+                    .classed('dashboard--element', true)
+                    .attr('href', function(d){
+                        return d.postUrl
+                    })
                     .append('p')
                     .text(function(d){
-                        return d.title;
+                        return d.title + ' - by ' + d.user;
                     })
             });
         </script>
