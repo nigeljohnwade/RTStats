@@ -3,6 +3,7 @@
     <head>
         <title>ReasonTalk stats dahsbaord</title>
         <link href="../css/main.css" rel="stylesheet">
+        
     </head>
     <body>
         <div class="dashboard">
@@ -22,6 +23,7 @@
                     return element.users;
                 });
                 const tickLabels = data.totalNewUsersPerMonth.map(function(element, index, array){
+                    //return index;
                     return element.year + ' ' + element.month;
                 });
                 d3ChartUtilities.drawColumnChart(
@@ -63,5 +65,6 @@
                     })
             });
         </script>
+        <link href="https://fonts.googleapis.com/css?family=Fredoka+One" rel="stylesheet">
     </body>
 </html>

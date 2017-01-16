@@ -41,7 +41,7 @@ const d3ChartUtilities = {
             legendWidth = $('.legend', container).width();
         }
 
-        //Create a d3 selection for the constainer of the chart
+        //Create a d3 selection for the container of the chart
         var containerSelection = d3.select(container);
         //Create an SVG element for the chart
         var chart = containerSelection.append("svg")
@@ -76,12 +76,12 @@ const d3ChartUtilities = {
         }
         //First pass at creating x axis
         var x = d3.scaleBand()
-            .rangeRound([0, width - legendWidth - leftPadding - rightPadding])
+            .range([0, width - legendWidth - leftPadding - rightPadding])
             .domain(tickLabels[0]);
         var axis_x = containerSelection.select("svg")
             .append("g")
             .attr("class", "x axis")
-            .call(d3.axisBottom(x))
+            .call(d3.axisBottom(x).ticks(10))
             .selectAll("text")
             .style("text-anchor", "center")
             .attr("transform", function (d) {
@@ -93,28 +93,26 @@ const d3ChartUtilities = {
         var plotHeight = height - chartTitleHeight - captionTextHeight - topPadding - bottomPadding - xAxisHeight;
 
         var y = d3.scaleLinear()
-            .range([plotHeight, 0]);
-        y.domain([0, d3.max(_dataCollate.max)]);
+            .range([plotHeight, 0])
+            .domain([0, d3.max(_dataCollate.max)]);
         var axis_y = containerSelection.select("svg")
             .append("g")
             .attr("class", "y axis")
-            .call(d3.axisLeft(y));
+            .call(d3.axisLeft(y).ticks(5));
         yAxisWidth = axis_y['_groups'][0][0].getBBox().width;
         containerSelection.select('g.x.axis').remove();
 
         //Second pass at x axis now we know how wide the y axis is.
         x = d3.scaleBand()
-            .rangeRound([0, width - legendWidth - yAxisWidth - leftPadding - rightPadding], 0, 0)
+            .range([0, width - legendWidth - yAxisWidth - leftPadding - rightPadding])
             .domain(tickLabels[0]);
         axis_x = containerSelection.select("svg")
             .append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(" + yAxisWidth + leftPadding + "," + (height - bottomPadding - xAxisHeight) + ")")
-            .call(d3.axisBottom(x))
+            .call(d3.axisBottom(x).ticks(10))
             .selectAll("text")
-            .style("text-anchor", "end")
-            .attr("dx", "-.8em")
-            .attr("dy", ".15em")
+            .style("text-anchor", "center")
             .attr("transform", function (d) {
                 return "rotate(-" + props.xAxisTickLabelRotation + ")"
             });

@@ -2,7 +2,8 @@
     box-sizing: border-box;
 }
 p{
-    margin: 0
+    margin: 0;
+    font-family: 'Fredoka One', cursive;
 }
 .bar{
     background-color: lightsteelblue;
@@ -17,7 +18,8 @@ p{
     padding: 6px;
     height: 300px;
     background-color: white;
-    border: 1px solid steelblue;
+    background-color: bisque;
+    background-clip: content-box;
 }
 .dashboard--active-users {
     width: 33.33333%;
@@ -35,5 +37,6 @@ p{
 }
 .dashboard--post-single{
     width: 20%;
+    font-size: 24px;
 }
 
